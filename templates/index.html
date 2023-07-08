@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-time Hand Gesture Recognition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+</head>
+<body>
+    <h1>Real-time Hand Gesture Recognition</h1>
+    <h2>Predicted Character: <span id="predicted_character"></span></h2>
+    <h2>Previous Letter: <span id="previous_letter"></span></h2>
+     <div id="character_info"></div>
+
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+
+    <script type="text/javascript">
+    const socket = io.connect('http://localhost:5000/test');
+        socket.on('character_info', function (data) {
+            console.log(data);
+            document.getElementById('character_info').innerHTML = `
+                <p>Predicted Character: ${data.predicted_character}</p>
+                <p>Previous Letter: ${data.previous_letter}</p>
+            `;
+        });
+</script>
+
+</body>
+</html>
